@@ -33,3 +33,14 @@ reverse('asdf')
 //debugger mode
 
 //node inspect index.js
+// jest 003_reverse_string/test.js --watch
+
+
+
+////
+
+function reverse(str) {
+  return str.split("").reverse().join("");
+}
+
+// ^^ got it...

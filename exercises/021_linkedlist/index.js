@@ -10,24 +10,24 @@ class Node {
 }
 
 class LinkedList {
-  constructor() {
-    this.head = null;
+  constructor(head = null) {
+    this.head = head;
   }
 
   insertFirst(data) {
     // this.head = new Node(data, this.head);
+    // retroactive improvement
     this.insertAt(data, 0);
   }
 
   size() {
-    let counter = 0;
-    let node = this.head;
-
-    while (node) {
-      counter++;
-      node = node.next;
-    }
-    return counter;
+    let count = 0;
+    let currentNode = this.head;
+    while (currentNode) {
+     count++;
+     currentNode = currentNode.next;
+    } 
+    return count;
   }
 
   getFirst() {
@@ -36,106 +36,144 @@ class LinkedList {
   }
 
   getLast() {
-    // if (!this.head) {
-    //   return null;
+    // if (!this.head) return null;
+    // let currentNode = this.head;
+    // while (currentNode.next) {
+    //   currentNode = currentNode.next;
     // }
-    // let node = this.head;
-    // while (node) {
-    //   if (!node.next) {
-    //     return node;
-    //   }
-    //   node = node.next;
-    // }
+    // return currentNode;
     return this.getAt(this.size() - 1);
   }
 
+  // in theory...its snake may be floating around in memory...but who cares??
   clear() {
     this.head = null;
   }
 
   removeFirst() {
-    if (!this.head) {
-      return;
-    }
+    if (!this.head) return;
     this.head = this.head.next;
   }
-
+  
+  // set the second to last node's next pointer to null
   removeLast() {
-    if (!this.head) {
-      return;
-    }
+    if (!this.head) return;
     if (!this.head.next) {
       this.head = null;
       return;
     }
-    let previous = this.head;
-    let node = this.head.next;
-    while (node.next) {
-      previous = node;
-      node = node.next;
+    let trailingNode = this.head;
+    let leadingNode = trailingNode.next;
+    while(leadingNode.next) {
+      trailingNode = leadingNode;
+      leadingNode = leadingNode.next;
     }
-    previous.next = null;
+    trailingNode.next = null;
   }
 
   insertLast(data) {
-    const last = this.getLast();
-
-    if (last) {
-      // There are some existing nodes in our chain
-      last.next = new Node(data);
+    const newNode = new Node(data);
+    let lastNode = this.getLast();
+    if (lastNode) {
+      lastNode.next = newNode;
     } else {
-      // The chain is empty!
-      this.head = new Node(data);
+      this.head = newNode;
     }
   }
 
   getAt(index) {
+    // GRIDER
     let counter = 0;
     let node = this.head;
-
     while (node) {
       if (counter === index) {
         return node;
       }
+
       counter++;
       node = node.next;
     }
     return null;
+    // Mine
+    // if (!this.head) return null;
+    // let counter = 0;
+    // let currentNode = this.head;
+    // while (counter < index) {
+    //   currentNode = currentNode.next;
+    //   if (!currentNode) return null;
+    //   counter++;
+    // }
+    // return currentNode;
   }
 
-  // stephen's
-  // getAt the previous index, then just update its next node to index + 1
-  // edge cases: you only have one node, so there is no previous node
-  // your index is out of bounds
   removeAt(index) {
-    if (!this.head) {
+    // get ahold of the node after...
+    // take note of the node before...
+    // the previous node should now point to the node just after the removing node
+
+    // EDGE CASE 1: NO NODES
+    if (!this.head) return;
+
+    // EDGE CASE 2: REMOVE ONE AND ONLY NODE
+    if (index == 0) {
+      this.removeFirst();
+      // GRIDER
+      // this.head = this.head.next; //oddd....
       return;
     }
-
-    if (index === 0) {
-      this.head = this.head.next;
-    }
-
-    const previous = this.getAt(index - 1);
-    if (!previous || !previous.next) {
+    
+    // MINE
+    // getAt() handles out of bounds, lastNode
+    // const previousNode = this.getAt(index - 1); // there will always be a previous node after EC 1 & 2
+    // const nextNode = this.getAt(index + 1); // goes to null if there is no next node
+    // previousNode.next = nextNode;
+    
+    // GRIDER
+    const previousNode = this.getAt(index - 1);
+    // the index given does not get lower than this || the index you requested is just one more than the last node
+    if (!previousNode || !previousNode.next) {
       return;
     }
-    previous.next = previous.next.next;
+    previousNode.next = previousNode.next.next;
   }
 
   insertAt(data, index) {
+    // get ahold of node before the index...
+    // take note of the immediately following node.
+    // create a new node
+    // have new node point to the following node
+    // have previous node point to the new node
+
+    // MINE
     if (!this.head) {
       this.head = new Node(data);
       return;
     }
-
-    if (index === 0) {
+    if (index == 0) {
+      // this.insertFirst(data);
       this.head = new Node(data, this.head);
       return;
     }
-    const previous = this.getAt(index - 1) || this.getLast();
-    const node = new Node(data, previous.next);
-    previous.next = node;
+    const previousNode = this.getAt(index - 1) || this.getLast();
+    // getLast() if index requested is out of bounds...just add new node to end of list
+    const currentNode = previousNode.next;
+    const newNode = new Node(data, currentNode);
+    previousNode.next = newNode;
+
+    // GRIDER
+    // if (!this.head) {
+    //   this.head = new Node(data);
+    //   return;
+    // }
+
+    // if (index === 0) {
+    //   this.head = new Node(data, this.head);
+    //   return;
+    // }
+
+    // const previous = this.getAt(index - 1) || this.getLast();
+    // const node = new Node(data, previous.next);
+    // previous.next = node;
   }
 
   forEach(cb) {
@@ -144,16 +182,24 @@ class LinkedList {
     while (node) {
       cb(node, counter);
       node = node.next;
-      counter++;
+    }
+  }
+
+  // this enables for (let node of l) syntax to work
+  *[Symbol.iterator]() {
+    let node = this.head;
+    while (node) {
+      yield node; // yield the node to the iterator/generator
+      // subject the node to whatever the user does inside the for of loop
+      node = node.next;
     }
   }
 
 
+
+
+
 }
 
-
-
-
-
-
 module.exports = { Node, LinkedList };
+// jest 021_linkedlist/test.js --watch

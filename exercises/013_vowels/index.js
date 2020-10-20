@@ -14,12 +14,23 @@
 //  return the counter;
 
 // using regex the safer bet is iterative
-function vowels(str) {
-  const matches = str.match(/[aeiou]/gi); //returns null if you don't find anything...
-  // g: don't stop creating arrays after finding first vowel, just keep finding things.
-  // i: make my search case insensitive
-  // [aeiou]: if anything if your string matches a or e or i or o or u...
-  return matches ? matches.length : 0;
+// function vowels(str) {
+//   const matches = str.match(/[aeiou]/gi); //returns null if you don't find anything...
+//   // g: don't stop creating arrays after finding first vowel, just keep finding things.
+//   // i: make my search case insensitive
+//   // [aeiou]: if anything if your string matches a or e or i or o or u...
+//   return matches ? matches.length : 0;
+// }
+
+const vowels = (phrase) => {
+  const vowels = ['a', 'e', 'i', 'o', 'u'];
+  let vowelCount = 0;
+  for (let char of phrase.toLowerCase()) {
+    if (vowels.includes(char)) {
+      vowelCount++;
+    }
+  }
+  return vowelCount;
 }
 
 

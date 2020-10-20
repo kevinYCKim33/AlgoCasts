@@ -22,7 +22,7 @@ class Node {
 
   remove(data) {
     this.children = this.children.filter(node => {
-      node !== data;
+      node.data !== data;
     })
   }
 }
@@ -48,13 +48,54 @@ class Tree {
     const arr = [this.root];
     while (arr.length) {
       const node = arr.shift();
+      // put the node's children first
+        //basically have them cut
       arr.unshift(...node.children);
+
       // for (let child of node.children) {
       //   arr.unshift(child);
       // }
+
+      //then do something with this node (not its children)
       fn(node);
     }
   }
 }
 
-module.exports = { Tree, Node };
+// module.exports = { Tree, Node };
+
+//         a
+//       / |  \
+//      b  c   d
+//     /  /\  /\
+//    e  f g h i
+//    |  |
+//    j  k
+
+const bfLetters = [];
+const dfLetters = [];
+
+const tree = new Tree();
+tree.root = new Node('a');
+tree.root.add('b');
+tree.root.add('c');
+tree.root.add('d');
+tree.root.children[0].add('e');
+tree.root.children[1].add('f');
+tree.root.children[1].add('g');
+tree.root.children[2].add('h');
+tree.root.children[2].add('i');
+tree.root.children[0].children[0].add('j');
+tree.root.children[1].children[0].add('k');
+
+tree.traverseBF(node => {
+  bfLetters.push(node.data);
+})
+
+console.log('breadth-first: ', bfLetters); // a, b, c, d, e, f, g, h, i
+
+tree.traverseDF(node => {
+  dfLetters.push(node.data);
+})
+
+console.log('depth-first: ', dfLetters); // a, b, e, j, c, f, k, g, d, h, i

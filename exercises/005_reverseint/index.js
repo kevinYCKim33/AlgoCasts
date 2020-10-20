@@ -29,6 +29,21 @@
     return Math.sign(n) * reversedAbsNum;
   }
 
+  // my solution a year later...knowing type coercion but not Math.sign()
+  function reverseInt(int) {
+  // check if there is a negative sign first...
+    let intInString = int.toString();
+    let negChecker = intInString[0] == '-';
+
+    let reversedAbsNum =  Math.abs(int).toString().split("").reverse().join("");
+
+    if (negChecker) {
+      return -1 * reversedAbsNum;
+    }
+
+    return 1 * reversedAbsNum; // 1 * '006' === 6
+  }
+
 module.exports = reverseInt;
 
 

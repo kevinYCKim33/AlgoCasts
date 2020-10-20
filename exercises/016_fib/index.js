@@ -12,32 +12,69 @@
 // from the 3rd element on, start adding the previous two nums
 
 function memoize(fn) {
-  debugger;
   const cache = {};
+  // ...args here is used as REST/GATHER parameter
+  // however many arguments provided... fn(1,2,3) 
+  // will now become args = [1,2,3]
   return function(...args) {
-    debugger;//idk how many args this would receive
     if (cache[args]) {
-      debugger;
+      // cache[[1]] = 3 // => {'1': 3}
+      // cache[[1,2]] = 4 // => {'1, 2': 3} //weirdddd but okay...
       return cache[args];
     }
-    const result = fn.apply(this, args); //look up mdn on apply
-    cache[args] = result;
+    // const result = fn.apply(null, args); // GRIDER misused this! old pre ES6 trick to spread array out into individual arguments
+    // but this SPREAD argument works better
+    // at this point...args is an array...
+    // ...args here will SPREAD out an array into indivual arguments
+    // fn(...[1,2,3]) becomes fn(1,2,3)
+    const result = fn(...args); // execute the function
+    cache[args] = result; // memoize it for potential future use..
 
-    return result;
-  }
+    return result; // then just return the result;
+  };
 }
 
-
 function slowFib(n) {
-  debugger;
   if (n < 2) {
     return n;
   }
+
   return fib(n - 1) + fib(n - 2);
 }
 
 const fib = memoize(slowFib);
-fib(8);
+fib(6);
+module.exports = fib;
+
+
+
+// function memoize(fn) {
+//   // debugger;
+//   const cache = {};
+//   return function(...args) {
+//     // debugger;//idk how many args this would receive
+//     if (cache[args]) {
+//       // debugger;
+//       return cache[args];
+//     }
+//     const result = fn.apply(this, args); //look up mdn on apply
+//     cache[args] = result;
+
+//     return result;
+//   }
+// }
+
+
+// function slowFib(n) {
+//   // debugger;
+//   if (n < 2) {
+//     return n;
+//   }
+//   return fib(n - 1) + fib(n - 2);
+// }
+
+// const fib = memoize(slowFib);
+// fib(6);
 
 // MEMOIZATION (MEMO EYE ZATION)
   //store the arguments of each function call along with

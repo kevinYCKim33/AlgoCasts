@@ -26,6 +26,16 @@ module.exports = capitalize;
 //   return cappedWords.join(" ");
 // };
 
+// MINE 1 YR LATER
+// function capitalize(str) {
+//   const strArr = str.split(" ");
+//   return strArr.map(function(word) {
+//     let firstLetter = word[0];
+//     let restOfWord = word.slice(1);
+//     return (firstLetter.toUpperCase() + restOfWord);
+//   }).join(" ");
+// }
+
 //STEPHEN I
 // function capitalize(str) {
 //   const words = [];

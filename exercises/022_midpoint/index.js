@@ -12,16 +12,61 @@
 //   l.insertLast('c')
 //   midpoint(l); // returns { data: 'b' }
 
-function midpoint(list) {
-  let slow = list.head;
-  let fast = list.head;
-  while(slow) {
-    if (!fast.next || !fast.next.next) {
-      return slow;
-    }
+
+function midpoint(l) {
+  let slow = l.head;
+  let fast = l.head;
+
+  while(fast.next && fast.next.next) {
     slow = slow.next;
     fast = fast.next.next;
   }
+
+  return slow;
 }
 
+// wrote this last year... 8/2018 
+// function midpoint(list) {
+//   let slow = list.head;
+//   let fast = list.head;
+//   while(slow) {
+//     if (!fast.next || !fast.next.next) {
+//       return slow;
+//     }
+//     slow = slow.next;
+//     fast = fast.next.next;
+//   }
+// }
+
+
 module.exports = midpoint;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function midpoint(list) {
+//   let slow = list.head;
+//   let fast = list.head;
+//   while(slow) {
+//     if (!fast.next || !fast.next.next) {
+//       return slow;
+//     }
+//     slow = slow.next;
+//     fast = fast.next.next;
+//   }
+// }

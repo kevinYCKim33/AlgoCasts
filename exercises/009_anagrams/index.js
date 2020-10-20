@@ -9,15 +9,15 @@
 //   anagrams('Hi there', 'Bye there') --> False
 
 // THE MOST ELEGANT WAY
-function anagrams(stringA, stringB) {
-  return cleanUp(stringA) === cleanUp(stringB);
-}
+// function anagrams(stringA, stringB) {
+//   return cleanUp(stringA) === cleanUp(stringB);
+// }
+//
+// const cleanUp = (phrase) => {
+//   return phrase.replace(/[^\w]/g, "").toLowerCase().split("").sort().join("");
+// }
 
-const cleanUp = (phrase) => {
-  return phrase.replace(/[^\w]/g, "").toLowerCase().split("").sort().join("");
-}
-
-module.exports = anagrams;
+// SORT!!! aah that is so clever!
 
 
 
@@ -47,30 +47,32 @@ module.exports = anagrams;
 // }
 
 // // MY WAY
-// function anagrams(stringA, stringB) {
-//   const cleanA = cleanUp(stringA);
-//   const cleanB = cleanUp(stringB);
-//   if (cleanA.length !== cleanB.length) {
-//     return false;
-//   }
-//   const aMap = charMapify(cleanA)
-//   const bMap = charMapify(cleanB);
-//   for (char in aMap) {
-//     if (aMap[char] !== bMap[char]) {
-//       return false;
-//     }
-//   }
-//   return true;
-// }
-//
-// const cleanUp = (phrase) => {
-//   return phrase.replace(/[^\w]/g, "").toLowerCase();
-// }
-//
-// const charMapify = (phrase) => {
-//   const charMap = {};
-//   for (char of phrase) {
-//     charMap[char] = charMap[char] + 1 || 1;
-//   }
-//   return charMap;
-// }
+function anagrams(stringA, stringB) {
+  const cleanA = cleanUp(stringA);
+  const cleanB = cleanUp(stringB);
+  if (cleanA.length !== cleanB.length) {
+    return false;
+  }
+  const aMap = charMapify(cleanA)
+  const bMap = charMapify(cleanB);
+  for (char in aMap) {
+    if (aMap[char] !== bMap[char]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+const cleanUp = (phrase) => {
+  return phrase.replace(/[^\w]/g, "").toLowerCase();
+}
+
+const charMapify = (phrase) => {
+  const charMap = {};
+  for (char of phrase) {
+    charMap[char] = charMap[char] + 1 || 1;
+  }
+  return charMap;
+}
+
+module.exports = anagrams;

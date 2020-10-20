@@ -11,7 +11,7 @@ function maxChar(str) {
   let maxKey;
 
   for (let char of str) {
-    chars[char] = chars[char] + 1 || 1;
+    chars[char] = chars[char] + 1 || 1; // NaN + 1 // NaN  |||||| NaN || 1 ==> 1
   };
 
   for (let char in chars) {
@@ -24,3 +24,27 @@ function maxChar(str) {
 }
 
 module.exports = maxChar;
+
+// function maxChar(string) {
+//   let obj = Object.prototype;
+//
+//   for (char of string) {
+//     if (obj[char] == undefined) {
+//       obj[char] = 1;
+//     } else {
+//       obj[char] += 1;
+//     }
+//   }
+//
+//   let kingVal = 0;
+//   let kingKey;
+//
+//   for (key in obj) {
+//     if (obj[key] > kingVal) {
+//       kingVal = obj[key];
+//       kingKey = key;
+//     }
+//   }
+//
+//   return kingKey;
+// }

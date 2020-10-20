@@ -32,3 +32,16 @@ function chunk(array, size) {
 // }
 
 module.exports = chunk;
+
+// function chunk(arr, n) {
+//   // have some array where we keep spliced arrays
+//   const trashedArr = [];
+//
+//   const clonedArr = Array.from(arr);
+//   // splice through the array until the array doesn't have any more length;
+//   while (clonedArr.length) {
+//     let splicedArr = clonedArr.splice(0, n);
+//     trashedArr.push(splicedArr);
+//   }
+//   return trashedArr;
+// }

@@ -15,23 +15,42 @@
 //       '#####'
 
 // Recursive: I did it without Stephen!
-function pyramid(n, row = 0, col = 0, level = '') {
-  const midpoint = Math.floor((2*n - 1) / 2);
-  if (n === row) {
-    return;
-  }
+// function pyramid(n, row = 0, col = 0, level = '') {
+//   const midpoint = Math.floor((2*n - 1) / 2);
+//   if (n === row) {
+//     return;
+//   }
 
-  if (col === (n * 2) -1) {
-    console.log(level);
-    return pyramid(n, row + 1);
-  }
+//   if (col === (n * 2) -1) {
+//     console.log(level);
+//     return pyramid(n, row + 1);
+//   }
 
-  if (midpoint - row <= col && midpoint + row >= col) {
-    level += '#';
-  } else {
-    level += ' ';
+//   if (midpoint - row <= col && midpoint + row >= col) {
+//     level += '#';
+//   } else {
+//     level += ' ';
+//   }
+//   pyramid(n, row, col+1, level);
+// }
+
+// 1 yr. later 8/30/2019
+const pyramid = (n) => {
+  const columnWidth = (n * 2) - 1;
+  const midpoint = Math.floor(columnWidth / 2);
+  for (let r = 0; r < n; r++) {
+    let rowPrint = "";
+    const poundHighIndex = midpoint + r;
+    const poundLowIndex = midpoint - r;
+    for (let c = 0; c < columnWidth; c++) {
+      if (c >= poundLowIndex && c<= poundHighIndex) {
+        rowPrint += '#';
+      } else {
+        rowPrint += ' ';
+      }
+    }
+    console.log(rowPrint);
   }
-  pyramid(n, row, col+1, level);
 }
 
 module.exports = pyramid;
@@ -58,7 +77,32 @@ module.exports = pyramid;
 //
 // }
 
-// The ol' for-loop way
+// my recursive 8.30.2019
+function pyramid(
+  n, 
+  r = 0, 
+  level = '', 
+  columnWidth = (n * 2) - 1, 
+  midpoint = Math.floor(columnWidth / 2) 
+ ) {
+  if (n == r) return;
+
+  // something here to alert we went through all columns in given row
+  if (level.length == columnWidth) {
+    console.log(level);
+    return pyramid(n, r + 1);
+  }
+
+  if (level.length >= midpoint - r && level.length <= midpoint + r) {
+    level += '#';
+  } else {
+    level += ' ';
+  }
+
+  return pyramid(n, r, level);
+}
+
+// GRIDER: The ol' for-loop way
 // function pyramid(n) {
 //   const midpoint = Math.floor((2*n - 1) / 2);
 //   for (let row = 0; row < n; row++) {
@@ -71,5 +115,24 @@ module.exports = pyramid;
 //       }
 //     }
 //     console.log(level);
+//   }
+// }
+
+// 1 yr. later 8/30/2019
+// const pyramid = (n) => {
+//   const columnWidth = (n * 2) - 1;
+//   const midpoint = Math.floor(columnWidth / 2);
+//   for (let r = 0; r < n; r++) {
+//     let rowPrint = "";
+//     const poundHighIndex = midpoint + r;
+//     const poundLowIndex = midpoint - r;
+//     for (let c = 0; c < columnWidth; c++) {
+//       if (c >= poundLowIndex && c<= poundHighIndex) {
+//         rowPrint += '#';
+//       } else {
+//         rowPrint += ' ';
+//       }
+//     }
+//     console.log(rowPrint);
 //   }
 // }

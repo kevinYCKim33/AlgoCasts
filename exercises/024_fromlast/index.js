@@ -11,18 +11,24 @@
 //    list.insertLast('d');
 //    fromLast(list, 2).data // 'b'
 
+// space out the first pointer and next pointer by n
+// once the next pointer reaches the end, return the first pointer;
+
 function fromLast(list, n) {
-  let slow = list.getFirst();
-  let fast = list.getFirst();
-  while (n > 0) {
-    fast = fast.next;
+  let first = list.head;
+  let second = list.head;
+
+  while (n) {
+    second = second.next;
     n--;
   }
-  while (fast.next) {
-    fast = fast.next;
-    slow = slow.next;
+
+  while (second.next) {
+    first = first.next;
+    second = second.next;
   }
-  return slow;
+
+  return first;
 }
 
 module.exports = fromLast;

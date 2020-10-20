@@ -27,3 +27,27 @@ function fizzBuzz(n) {
 }
 
 module.exports = fizzBuzz;
+
+// function fizzBuzz(n) {
+//   for (let i = 1; i <=n; i++ ) {
+//     if (i % 3 == 0 && i % 5 == 0) {
+//       console.log('fizzbuzz');
+//     } else if (i % 3 == 0) {
+//       console.log('fizz');
+//     } else if (i % 5 == 0) {
+//       console.log('buzz');
+//     } else {
+//       console.log(i);
+//     }
+//   }
+// }
+
+function fizzBuzzBazz(n) {
+  for (let i = 1; i<=n; i++) {
+    let str = '';
+    if (i % 3 == 0) str += 'fizz';
+    if (i % 5 == 0) str += 'buzz';
+    if (i % 7 == 0) str += 'bazz';
+    console.log(str || i);
+  }
+}
